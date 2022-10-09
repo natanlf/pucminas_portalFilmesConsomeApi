@@ -23,7 +23,7 @@ function pesquisarFilme() {
     let concatString=`<h2 class="text-center">Busca Filmes</h2>
     <div id="container-busca" class="d-flex flex-wrap justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-between justify-content-xl-between">`;
       data.results.forEach(filme => {
-        concatString += `<div class="card" style="width: 18rem;">
+        concatString += `<div class="card">
           <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
             <div class="card-body">
               <h5 class="card-title">${filme.original_title}</h5>
@@ -51,7 +51,7 @@ function getPopulares() {
 
           let concatString="";
           data.results.forEach(filme => {
-              concatString += `<div class="card" style="width: 18rem;">
+              concatString += `<div class="card">
               <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
               <div class="card-body">
                 <h5 class="card-title">${filme.original_title}</h5>
@@ -78,7 +78,7 @@ function getCinema() {
 
           let concatString="";
           data.results.forEach(filme => {
-              concatString += `<div class="card" style="width: 18rem;">
+              concatString += `<div class="card">
               <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
               <div class="card-body">
                 <h5 class="card-title">${filme.original_title}</h5>
