@@ -38,6 +38,10 @@
                           <a class="nav-link" href="#">Cinema</a>
                       </li>
                     </ul>
+                    <form class="d-flex" role="search">
+                      <input id="buscarFilme" class="form-control me-2" type="search" placeholder="Pesquisar Filme" aria-label="Search" name="buscarFilme">
+                      <button class="btn btn-outline-primary bg-light" type="button" onclick="pesquisarFilme()">Buscar</button>
+                    </form>
                   </div>
                 </div>
               </nav>
@@ -46,26 +50,23 @@
 
     <main class="p-4">
 
-        <div class="container p-4">
-            <h2 class="text-center">Populares</h2>
-            <div id="container-populares" class="d-flex flex-wrap justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-between justify-content-xl-between">
+    <div id="buscaFilme" class="container invisible">
+      
+    </div>
 
-            </div>
-        </div>
-    
-        <div class="container p-4">
-            <h2 class="text-center">Último</h2>
-            <div id="container-ultimos" class="d-flex flex-wrap justify-content-center">
+      <div class="container p-4">
+          <h2 class="text-center">Populares</h2>
+          <div id="container-populares" class="d-flex flex-wrap justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-between justify-content-xl-between">
 
-            </div>
-        </div>
-    
-        <div class="container p-4">
-            <h2 class="text-center">Cinema</h2>
-            <div id="container-cinema" class="d-flex flex-wrap justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-between justify-content-xl-between">
+          </div>
+      </div>
+  
+      <div class="container p-4">
+          <h2 class="text-center">Cinema</h2>
+          <div id="container-cinema" class="d-flex flex-wrap justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-between justify-content-xl-between">
 
-            </div>
-        </div>
+          </div>
+      </div>
  
     </main>
 
