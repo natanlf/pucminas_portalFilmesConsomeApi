@@ -6,22 +6,27 @@ const API_CONFIG = {
     buscaEndpoint: "search/movie/",
     popularesEndpoint: "movie/popular/",
     cinemaEndpoint: "movie/now_playing/",
-    language: "&language=pt-Br"
+    language: "&language=pt-Br",
+    page: 1
 }
 
-function pesquisarFilme() {
-  filmeBuscado = document.getElementById("buscarFilme").value; 
-  fetch(`${API_CONFIG.baseUrl}${API_CONFIG.buscaEndpoint}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}&query=${filmeBuscado}`)
+function pesquisarFilme(page = API_CONFIG.page) {
+  API_CONFIG.page = page;
+  document.getElementById("buscaFilme").innerHTML = buildSpinner();
+
+  filmeBuscado = document.getElementById("buscarFilme").value;
+
+  fetch(`${API_CONFIG.baseUrl}${API_CONFIG.buscaEndpoint}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}&query=${filmeBuscado}&page=${page}`)
   .then(resp => resp.json())
   .then(data => {
 
     let buscaFilmeId = document.getElementById("buscaFilme");
     buscaFilmeId.classList.remove("invisible");
     buscaFilmeId.classList.add("visible");
-    buscaFilmeId.classList.add("p-4");
+    buscaFilmeId.classList.add("p-4"); 
 
-    let concatString=`<h2 class="text-center">Busca Filmes</h2>
-    <div id="container-busca" class="d-flex flex-wrap justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-between justify-content-xl-between">`;
+    let concatString=`<h2 class="text-center">Filme buscado: <b>${filmeBuscado}</b></h2>
+    <div id="container-busca" class="row flex-row flex-nowrap">`;
       data.results.forEach(filme => {
         concatString += `<div class="card">
           <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
@@ -36,7 +41,11 @@ function pesquisarFilme() {
       })    
       concatString += `</div>`;
 
-      document.getElementById("buscaFilme").innerHTML = concatString;
+      buscaFilmeId.innerHTML = concatString;
+
+      if(data.total_pages > 1) {
+        buildPagination(data.total_pages);
+      }
   }).catch(error => {
     console.log(error)
     document.getElementById("container-populares").innerHTML = `<div class="alert alert-danger" role="alert">
@@ -45,6 +54,8 @@ function pesquisarFilme() {
 }
 
 function getPopulares() {
+  document.getElementById("container-populares").innerHTML = buildSpinner();
+
     fetch(`${API_CONFIG.baseUrl}${API_CONFIG.popularesEndpoint}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}`)
         .then(resp => resp.json())
         .then(data => {
@@ -72,6 +83,7 @@ function getPopulares() {
 }
 
 function getCinema() {
+  document.getElementById("container-cinema").innerHTML = buildSpinner();
     fetch(`${API_CONFIG.baseUrl}${API_CONFIG.cinemaEndpoint}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}`)
         .then(resp => resp.json())
         .then(data => {
@@ -101,4 +113,38 @@ function getCinema() {
 
 getPopulares();
 getCinema();
+
+function buildItemPage(page) {
+  if(API_CONFIG.page === page) {
+    return `<li onclick="pesquisarFilme(${page})" class="page-item"><a class="page-link active-custom-page" href="#">${page}</a></li>`;
+  } else {
+    return `<li onclick="pesquisarFilme(${page})" class="page-item"><a class="page-link" href="#">${page}</a></li>`
+  }
+}
+
+function buildSpinner() {
+  return `
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only"></span>
+    </div>
+  </div>`;
+}
+
+function buildPagination(totalPages) {
+  concatPages = ``;
+        for(let index = 0; index < totalPages; index++) {
+          concatPages += buildItemPage(index+1);
+        }
+        const containerBusca = document.getElementById("container-busca");
+        let htmlPagination = `
+        <div class="w-100 p-4">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination d-flex flex-wrap justify-content-center">
+              ${concatPages}
+            </ul>
+          </nav>
+        </div>`;
+        containerBusca.insertAdjacentHTML("afterend", htmlPagination);
+}
 

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
 
+body {
+    background: #263238;
+    color: #eceff1;
+}
+
 header, body {
     font-family: 'Roboto', sans-serif;
 }
@@ -8,11 +13,58 @@ footer {
     color: white;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 3px grey; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ff5722; 
+}
+
+/* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: #ff5722; 
+}
+
 .card {
     width: 18rem;
     margin: 10px;
+    color: black;
+    padding: 0px;
 }
 
 form button:hover {
     color: darkgray!important;
+}
+
+.bg-custom-primary{
+    background: #bf360c;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+.nav-link {
+    color: white;
+}
+
+#container-busca {
+    overflow-x: auto;
+}
+
+.active-custom-page {
+    background-color: #ff5722;
+    color: #ffffff;
+}
+
+.active-custom-page:hover {
+    background-color: gray;
 }
