@@ -25,16 +25,34 @@ footer {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #ff5722; 
+    background: grey; 
 }
 
 /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-    background: #ff5722; 
+    background: grey; 
+}
+
+@media screen and (max-width: 992px) { /* Celulares e Tablets */
+    .card {
+        width: 12rem !important;
+    }
+
+    #back-arrow {
+        display: none;
+    }
+
+    #next-arrow {
+        display: none;
+    }
+
+    .media-votos {
+        top: 65% !important;
+    }
 }
 
 .card {
-    width: 18rem;
+    width: 17rem;
     margin: 10px;
     color: black;
     padding: 0px;
@@ -67,4 +85,45 @@ form button:hover {
 
 .active-custom-page:hover {
     background-color: gray;
+}
+
+#next-arrow {
+    cursor: pointer;
+    align-self: center;
+    right: 0;
+    z-index: 2;
+    width: 25px;
+    position: absolute;
+}
+
+
+#back-arrow {
+    cursor: pointer;
+    align-self: center;
+    left: 0;
+    z-index: 2;
+    width: 25px;
+    position: absolute;
+}
+
+.media-votos  {
+    position: absolute;
+    right: 0;
+    top: 76%;
+}
+
+.media-votos-top {
+    background-color: #43a047 !important;
+}
+
+.media-votos-medio {
+    background-color: #ef6c00 !important;
+}
+
+.media-votos-baixo {
+    background-color: #e53935 !important;
+}
+
+.total-votos {
+    margin: 0px;
 }
