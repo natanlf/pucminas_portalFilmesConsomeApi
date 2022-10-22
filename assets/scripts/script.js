@@ -26,8 +26,7 @@ function pesquisarFilme(page = API_CONFIG.page) {
     buscaFilmeId.classList.add("p-4"); 
 
     let concatString=`<h2 class="text-center">Filme buscado: <b>${filmeBuscado}</b></h2>
-    <div id="container-busca" class="row flex-row flex-nowrap">
-      <ion-icon id="back-arrow" name="chevron-back-outline" size="large"></ion-icon>`;
+    <div id="container-busca" class="container-filmes row flex-row flex-nowrap">`;
       data.results.forEach(filme => {
         concatString += `<div class="card">
           <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
@@ -41,76 +40,78 @@ function pesquisarFilme(page = API_CONFIG.page) {
             </div>
           </div>`;
       })    
-      concatString += `
-        <ion-icon id="next-arrow" name="chevron-forward-outline" size="large"></ion-icon>
-      </div>`;
+      concatString += `</div>`;
 
       buscaFilmeId.innerHTML = concatString;
 
       if(data.total_pages > 1) {
         buildPagination(data.total_pages);
       }
-      arrowBackNext();
   }).catch(error => {
     console.log(error)
-    document.getElementById("container-populares").innerHTML = `<div class="alert alert-danger" role="alert">
+    document.getElementById("container-busca").innerHTML = `<div class="alert alert-danger" role="alert">
       Erro - Problemas ao consumir a api</div>`
   })
 }
 
 function getPopulares() {
-  document.getElementById("container-populares").innerHTML = buildSpinner();
+  document.getElementById("buscaPopulares").innerHTML = buildSpinner();
 
     fetch(`${API_CONFIG.baseUrl}${API_CONFIG.popularesEndpoint}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}`)
         .then(resp => resp.json())
         .then(data => {
 
-          let concatString="";
+          let concatString=`<h2 class="text-center">Populares</h2>
+          <div id="container-populares" class="container-filmes row flex-row flex-nowrap">`;
           data.results.forEach(filme => {
-              concatString += `<div class="card">
+              concatString += `
+            <div class="card">
               <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
-              <div class="card-body">
+              <div class="card-body d-flex flex-column justify-content-around">
                 <h5 class="card-title">${filme.original_title}</h5>
-                <p class="card-text">
-                <p>${convertPtBrDate(filme.release_date)}</p>
+                <p class="card-text d-flex flex-wrap justify-content-between">
+                <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
+                <a href="#">Ver Detalhes</a>
               </div>
-            </div>`;
+            </div>
+            `;
           })    
-
-          document.getElementById("container-populares").innerHTML = concatString;
+          concatString += `</div>`;
+          document.getElementById("buscaPopulares").innerHTML = concatString;
         }).catch(error => {
           console.log(error)
-          document.getElementById("container-populares").innerHTML = `<div class="alert alert-danger" role="alert">
+          document.getElementById("buscaPopulares").innerHTML = `<div class="alert alert-danger" role="alert">
             Erro - Problemas ao consumir a api</div>`
         })
 }
 
 function getCinema() {
-  document.getElementById("container-cinema").innerHTML = buildSpinner();
+  document.getElementById("buscaCinema").innerHTML = buildSpinner();
     fetch(`${API_CONFIG.baseUrl}${API_CONFIG.cinemaEndpoint}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}`)
         .then(resp => resp.json())
         .then(data => {
 
-          let concatString="";
+          
+          let concatString=`<h2 class="text-center">Cinema</h2>
+          <div id="container-cinema" class="container-filmes row flex-row flex-nowrap">`;
           data.results.forEach(filme => {
               concatString += `<div class="card">
               <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
-              <div class="card-body">
+              <div class="card-body d-flex flex-column justify-content-around">
                 <h5 class="card-title">${filme.original_title}</h5>
-                <p class="card-text">
-                <p>${filme.release_date}</p>
-                <p>Média de Votos: <span class="badge rounded-pill bg-primary">${filme.vote_average}</span></p>
-                <p>Total Votos: <span class="badge rounded-pill bg-secondary">${filme.vote_count}</span></p>
-          
+                <p class="card-text d-flex flex-wrap justify-content-between">
+                <span>${convertPtBrDate(filme.release_date)}</span>
+                ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
+                <a href="#">Ver Detalhes</a>
               </div>
             </div>`;
           })    
-
-          document.getElementById("container-cinema").innerHTML = concatString;
+          concatString += `</div>`;  
+          document.getElementById("buscaCinema").innerHTML = concatString;
         }).catch(error => {
           console.log(error)
-          document.getElementById("container-populares").innerHTML = `<div class="alert alert-danger" role="alert">
+          document.getElementById("buscaCinema").innerHTML = `<div class="alert alert-danger" role="alert">
             Erro - Problemas ao consumir a api</div>`
         })
 }
@@ -163,16 +164,6 @@ function buildMediaDeVotos(media, totalVotos) {
   }
 }
 
-function arrowBackNext() {
-  document.getElementById("back-arrow").addEventListener("click", () => {
-    document.getElementById("container-busca").scrollLeft -= 290;
-  });
-
-  document.getElementById("next-arrow").addEventListener("click", () => {
-    document.getElementById("container-busca").scrollLeft += 290;
-  });
-}
-
 function convertPtBrDate(date) {
   if(date) {
     let dateArray = date.split("-");
@@ -180,9 +171,6 @@ function convertPtBrDate(date) {
   }
 }
 
-function scrollBarIsVisible() {
-  
-}
 
 function init() {
   getPopulares();
