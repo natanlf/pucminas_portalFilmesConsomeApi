@@ -34,8 +34,9 @@ function pesquisarFilme(page = API_CONFIG.page) {
             <div class="card-body d-flex flex-column justify-content-around">
               <h5 class="card-title">${filme.original_title}</h5>
               <div class="card-text d-flex flex-wrap justify-content-between">
-                ${convertPtBrDate(filme.release_date)}
+                <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
+                <a href="#">Ver Detalhes</a>
               </div>
             </div>
           </div>`;
