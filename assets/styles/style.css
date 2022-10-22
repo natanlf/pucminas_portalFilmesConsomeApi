@@ -108,3 +108,7 @@ form button:hover {
 .total-votos {
     margin: 0px;
 }
+
+a:hover {
+    cursor: pointer;
+}

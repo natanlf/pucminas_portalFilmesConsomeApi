@@ -171,6 +171,10 @@ function convertPtBrDate(date) {
   }
 }
 
+function scrollToElementById(id) {
+  document.getElementById(id).scrollIntoView();
+}
+
 
 function init() {
   getPopulares();
