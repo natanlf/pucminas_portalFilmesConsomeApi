@@ -94,15 +94,15 @@ form button:hover {
 }
 
 .media-votos-top {
-    background-color: #43a047 !important;
+    background-color: #2e7d32 !important;
 }
 
 .media-votos-medio {
-    background-color: #ef6c00 !important;
+    background-color: #e65100 !important;
 }
 
 .media-votos-baixo {
-    background-color: #e53935 !important;
+    background-color: #c62828 !important;
 }
 
 .total-votos {

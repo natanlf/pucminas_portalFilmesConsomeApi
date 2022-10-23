@@ -28,10 +28,12 @@ function pesquisarFilme(page = API_CONFIG.page) {
     let concatString=`<h2 class="text-center">Filme buscado: <b>${filmeBuscado}</b></h2>
     <div id="container-busca" class="container-filmes row flex-row flex-nowrap">`;
       data.results.forEach(filme => {
-        concatString += `<div class="card">
-          <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
+        if(validateMovies(filme.poster_path, filme.original_title, filme.release_date, filme.vote_average, filme.vote_count)) {
+          concatString += 
+          `<div class="card">
+            <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
             <div class="card-body d-flex flex-column justify-content-around">
-              <h5 class="card-title">${filme.original_title}</h5>
+              <h5 class="card-title">${truncateTitle(filme.original_title)}</h5>
               <div class="card-text d-flex flex-wrap justify-content-between">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
@@ -39,6 +41,8 @@ function pesquisarFilme(page = API_CONFIG.page) {
               </div>
             </div>
           </div>`;
+        }
+        
       })    
       concatString += `</div>`;
 
@@ -68,7 +72,7 @@ function getPopulares() {
             <div class="card">
               <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
               <div class="card-body d-flex flex-column justify-content-around">
-                <h5 class="card-title">${filme.original_title}</h5>
+                <h5 class="card-title">${truncateTitle(filme.original_title)}</h5>
                 <p class="card-text d-flex flex-wrap justify-content-between">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
@@ -99,7 +103,7 @@ function getCinema() {
               concatString += `<div class="card">
               <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
               <div class="card-body d-flex flex-column justify-content-around">
-                <h5 class="card-title">${filme.original_title}</h5>
+                <h5 class="card-title">${truncateTitle(filme.original_title)}</h5>
                 <p class="card-text d-flex flex-wrap justify-content-between">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
@@ -175,6 +179,31 @@ function scrollToElementById(id) {
   document.getElementById(id).scrollIntoView();
 }
 
+function validateMovies(...args) {
+  let resp = args.filter(e=> !e);
+  return resp.length > 0 ? false : true;
+}
+
+function truncateTitle(title) {
+  if(isMobile()) {
+    return title.length >= 30 ? title.slice(0, 30)+"..." : title;
+  }
+  return title;
+}
+
+function isMobile() {
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i
+  ];
+
+  return toMatch.some( toMatchItem => navigator.userAgent.match(toMatchItem) );
+}
 
 function init() {
   getPopulares();
