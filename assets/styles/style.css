@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
 
 body {
-    background: #263238;
+    background: #001117;
     color: #eceff1;
 }
 
@@ -63,7 +63,7 @@ form button:hover {
 }
 
 .bg-custom-primary{
-    background: #bf360c;
+    background: rgb(58, 58, 58);
 }
 
 .nav-link.active {
@@ -79,12 +79,20 @@ form button:hover {
 }
 
 .active-custom-page {
-    background-color: #ff5722;
+    background-color: #0099FF;
     color: #ffffff;
 }
 
 .active-custom-page:hover {
     background-color: gray;
+}
+
+.btn.btn-outline-primary.bg-light{
+    color: #004B7D;
+}
+
+.btn.btn-outline-primary.bg-light:hover {
+    color: #0099FF !important;
 }
 
 .media-votos  {
@@ -107,6 +115,10 @@ form button:hover {
 
 .total-votos {
     margin: 0px;
+}
+
+a {
+    color: #0099FF
 }
 
 a:hover {
