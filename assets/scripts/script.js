@@ -6,6 +6,7 @@ const API_CONFIG = {
     buscaEndpoint: "search/movie/",
     popularesEndpoint: "movie/popular/",
     cinemaEndpoint: "movie/now_playing/",
+    detalhesEndpoint: "movie/",
     language: "&language=pt-Br",
     page: 1
 }
@@ -76,7 +77,7 @@ function getPopulares() {
                 <p class="card-text d-flex flex-wrap justify-content-between">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
-                <a href="#">Ver Detalhes</a>
+                <a onclick="verDetalhes()" href="/detalhes.html?filmeId=${filme.id}">Ver Detalhes</a>
               </div>
             </div>
             `;
@@ -116,6 +117,34 @@ function getCinema() {
         }).catch(error => {
           console.log(error)
           document.getElementById("buscaCinema").innerHTML = `<div class="alert alert-danger" role="alert">
+            Erro - Problemas ao consumir a api</div>`
+        })
+}
+
+function getDetalhes(filmeId) {
+  document.getElementById("buscaDetalhes").innerHTML = buildSpinner();
+
+    fetch(`${API_CONFIG.baseUrl}${API_CONFIG.detalhesEndpoint}${filmeId}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}`)
+        .then(resp => resp.json())
+        .then(filme => {
+
+          let concatString=`
+          <div id="container-detalhes container">
+            <div class="row">
+              <div class="col-12 col-lg-5">
+                <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top img-detalhes" alt="${filme.original_title}">
+              </div>
+              <div class="card-body col-12 col-lg-7 p-4">
+                <h5 class="card-title">${filme.original_title}</h5>
+                <p class="card-text">${filme.overview}</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+          </div>`;
+          document.getElementById("buscaDetalhes").innerHTML = concatString;
+        }).catch(error => {
+          console.log(error)
+          document.getElementById("buscaDetalhes").innerHTML = `<div class="alert alert-danger" role="alert">
             Erro - Problemas ao consumir a api</div>`
         })
 }
@@ -205,9 +234,19 @@ function isMobile() {
   return toMatch.some( toMatchItem => navigator.userAgent.match(toMatchItem) );
 }
 
+function backToHome() {
+  window.location.assign("/index.html");
+}
+
 function init() {
-  getPopulares();
-  getCinema();
+  if(!window.location.pathname.match("detalhes")) {
+    getPopulares();
+    getCinema();
+  } else {
+    let paramsSearch = window.location.search;
+    let params = paramsSearch.split("=")
+    getDetalhes(params[1]);
+  }
 }
 
 init();

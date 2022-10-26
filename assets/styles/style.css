@@ -124,3 +124,15 @@ a {
 a:hover {
     cursor: pointer;
 }
+
+.back-arrow:hover {
+    cursor: pointer;
+}
+
+.no-margin {
+    margin: 0px !important;
+}
+
+.h-54 {
+    height: 54px;
+}
