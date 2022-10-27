@@ -136,3 +136,11 @@ a:hover {
 .h-54 {
     height: 54px;
 }
+
+#cash {
+    color: #2e7d32;
+}
+
+.mb-card {
+    margin-bottom: 1rem;
+}

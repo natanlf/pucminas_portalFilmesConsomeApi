@@ -29,12 +29,12 @@ function pesquisarFilme(page = API_CONFIG.page) {
     let concatString=`<h2 class="text-center">Filme buscado: <b>${filmeBuscado}</b></h2>
     <div id="container-busca" class="container-filmes row flex-row flex-nowrap">`;
       data.results.forEach(filme => {
-        if(validateMovies(filme.poster_path, filme.original_title, filme.release_date, filme.vote_average, filme.vote_count)) {
+        if(validateMovies(filme.poster_path, filme.title, filme.release_date, filme.vote_average, filme.vote_count)) {
           concatString += 
           `<div class="card">
-            <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
+            <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.title}">
             <div class="card-body d-flex flex-column justify-content-around">
-              <h5 class="card-title">${truncateTitle(filme.original_title)}</h5>
+              <h5 class="card-title">${truncateTitle(filme.title)}</h5>
               <div class="card-text d-flex flex-wrap justify-content-between">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
@@ -71,9 +71,9 @@ function getPopulares() {
           data.results.forEach(filme => {
               concatString += `
             <div class="card">
-              <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
+              <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.title}">
               <div class="card-body d-flex flex-column justify-content-around">
-                <h5 class="card-title">${truncateTitle(filme.original_title)}</h5>
+                <h5 class="card-title">${truncateTitle(filme.title)}</h5>
                 <p class="card-text d-flex flex-wrap justify-content-between">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
@@ -102,9 +102,9 @@ function getCinema() {
           <div id="container-cinema" class="container-filmes row flex-row flex-nowrap">`;
           data.results.forEach(filme => {
               concatString += `<div class="card">
-              <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.original_title}">
+              <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.title}">
               <div class="card-body d-flex flex-column justify-content-around">
-                <h5 class="card-title">${truncateTitle(filme.original_title)}</h5>
+                <h5 class="card-title">${truncateTitle(filme.title)}</h5>
                 <p class="card-text d-flex flex-wrap justify-content-between">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
@@ -127,16 +127,29 @@ function getDetalhes(filmeId) {
     fetch(`${API_CONFIG.baseUrl}${API_CONFIG.detalhesEndpoint}${filmeId}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}`)
         .then(resp => resp.json())
         .then(filme => {
-
+          console.log(filme)
           let concatString=`
           <div id="container-detalhes container">
-            <div class="row">
+            <div class="row justify-content-center">
               <div class="col-12 col-lg-5">
-                <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top img-detalhes" alt="${filme.original_title}">
+                <div class="d-flex flex-row justify-content-center">
+                  <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top img-detalhes" alt="${filme.original_title}">
+                </div>
               </div>
               <div class="card-body col-12 col-lg-7 p-4">
-                <h5 class="card-title">${filme.original_title}</h5>
+                <h1 class="card-title mb-card">${filme.title}</h1>
+                <p class="card-text">${filme.tagline}</p>
+                ${buildGenres(filme.genres)}
                 <p class="card-text">${filme.overview}</p>
+                <div class="d-flex flex-row align-items-center gap-2 mb-card">
+                  Orçamento:
+                  <div class="d-flex flex-row align-items-center">
+                    <ion-icon name="logo-usd"></ion-icon>
+                    ${filme.budget}
+                  </div>
+                </div>
+                <p class="card-text">Data de lançamento: ${convertPtBrDate(filme.release_date)}</p>
+                <p>${buildProductionsCompanies(filme.production_companies)}</p>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
               </div>
             </div>
@@ -197,10 +210,30 @@ function buildMediaDeVotos(media, totalVotos) {
   }
 }
 
+function buildGenres(genres) {
+  let genresHtml = `<div class="d-flex flex-wrap gap-2 mb-card">
+  Gêneros: `;
+    genres.forEach((e, i) => {
+      genresHtml+=`<div>${e.name} ${i < genres.length-1 ? ",": ""} </div>`;
+    })
+  genresHtml+=`</div>`;
+  return genresHtml;
+}
+
+function buildProductionsCompanies(productions) {
+  let productionsHtml = `<div class="d-flex flex-wrap gap-2 mb-card">
+  Empresas produtoras: `;
+  productions.forEach((e, i) => {
+    productionsHtml+=`<div>${e.name} ${i < productions.length-1 ? ",": ""} </div>`;
+    })
+    productionsHtml+=`</div>`;
+  return productionsHtml;
+}
+
 function convertPtBrDate(date) {
   if(date) {
     let dateArray = date.split("-");
-    return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`
+    return `${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`
   }
 }
 
