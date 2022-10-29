@@ -58,6 +58,14 @@ footer {
     padding: 0px;
 }
 
+.card {
+    transition: width 1s, height 1s;
+}
+
+.card:hover {
+    width: 17.8rem;
+}
+
 form button:hover {
     color: darkgray!important;
 }
@@ -135,10 +143,6 @@ a:hover {
 
 .h-54 {
     height: 54px;
-}
-
-#cash {
-    color: #2e7d32;
 }
 
 .mb-card {

@@ -108,7 +108,7 @@ function getCinema() {
                 <p class="card-text d-flex flex-wrap justify-content-between">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
-                <a href="#">Ver Detalhes</a>
+                <a onclick="verDetalhes()" href="/detalhes.html?filmeId=${filme.id}">Ver Detalhes</a>
               </div>
             </div>`;
           })    
@@ -141,16 +141,9 @@ function getDetalhes(filmeId) {
                 <p class="card-text">${filme.tagline}</p>
                 ${buildGenres(filme.genres)}
                 <p class="card-text">${filme.overview}</p>
-                <div class="d-flex flex-row align-items-center gap-2 mb-card">
-                  Orçamento:
-                  <div class="d-flex flex-row align-items-center">
-                    <ion-icon name="logo-usd"></ion-icon>
-                    ${filme.budget}
-                  </div>
-                </div>
+                ${buildBudget(filme.budget)}
                 <p class="card-text">Data de lançamento: ${convertPtBrDate(filme.release_date)}</p>
                 <p>${buildProductionsCompanies(filme.production_companies)}</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
               </div>
             </div>
           </div>`;
@@ -228,6 +221,19 @@ function buildProductionsCompanies(productions) {
     })
     productionsHtml+=`</div>`;
   return productionsHtml;
+}
+
+function buildBudget(budget) {
+  if(budget) {
+   return `<div class="d-flex flex-row align-items-center gap-2 mb-card">
+    Orçamento:
+    <div class="d-flex flex-row align-items-center">
+      <ion-icon name="logo-usd"></ion-icon>
+      ${budget}
+    </div>
+  </div>`
+  }
+  return "";
 }
 
 function convertPtBrDate(date) {
