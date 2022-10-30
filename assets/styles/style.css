@@ -47,7 +47,7 @@ footer {
     }
 
     .media-votos {
-        top: 62% !important;
+        top: 60% !important;
     }
 }
 
@@ -58,12 +58,10 @@ footer {
     padding: 0px;
 }
 
-.card {
-    transition: width 1s, height 1s;
-}
-
 .card:hover {
-    width: 17.8rem;
+    background-color: #323638;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 form button:hover {
@@ -106,7 +104,7 @@ form button:hover {
 .media-votos  {
     position: absolute;
     right: 0;
-    top: 76%;
+    top: 74%;
 }
 
 .media-votos-top {

@@ -35,10 +35,10 @@ function pesquisarFilme(page = API_CONFIG.page) {
             <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.title}">
             <div class="card-body d-flex flex-column justify-content-around">
               <h5 class="card-title">${truncateTitle(filme.title)}</h5>
-              <div class="card-text d-flex flex-wrap justify-content-between">
+              <div class="card-text d-flex flex-wrap justify-content-between align-items-center">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
-                <a href="#">Ver Detalhes</a>
+                <a class="btn btn-link" href="/detalhes.html?filmeId=${filme.id}" role="button">Ver Detalhes</a>
               </div>
             </div>
           </div>`;
@@ -74,10 +74,10 @@ function getPopulares() {
               <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.title}">
               <div class="card-body d-flex flex-column justify-content-around">
                 <h5 class="card-title">${truncateTitle(filme.title)}</h5>
-                <p class="card-text d-flex flex-wrap justify-content-between">
+                <p class="card-text d-flex flex-wrap justify-content-between align-items-center">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
-                <a onclick="verDetalhes()" href="/detalhes.html?filmeId=${filme.id}">Ver Detalhes</a>
+                <a class="btn btn-link" href="/detalhes.html?filmeId=${filme.id}" role="button">Ver Detalhes</a>
               </div>
             </div>
             `;
@@ -105,10 +105,10 @@ function getCinema() {
               <img src="${API_CONFIG.baseUrlCardImage}${filme.poster_path}" class="card-img-top" alt="${filme.title}">
               <div class="card-body d-flex flex-column justify-content-around">
                 <h5 class="card-title">${truncateTitle(filme.title)}</h5>
-                <p class="card-text d-flex flex-wrap justify-content-between">
+                <p class="card-text d-flex flex-wrap justify-content-between align-items-center">
                 <span>${convertPtBrDate(filme.release_date)}</span>
                 ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
-                <a onclick="verDetalhes()" href="/detalhes.html?filmeId=${filme.id}">Ver Detalhes</a>
+                <a class="btn btn-link" href="/detalhes.html?filmeId=${filme.id}" role="button">Ver Detalhes</a>
               </div>
             </div>`;
           })    
