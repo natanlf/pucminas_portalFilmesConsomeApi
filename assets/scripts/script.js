@@ -37,7 +37,7 @@ function pesquisarFilme(page = API_CONFIG.page) {
               <h5 class="card-title">${truncateTitle(filme.title)}</h5>
               <div class="card-text d-flex flex-wrap justify-content-between align-items-center">
                 <span>${convertPtBrDate(filme.release_date)}</span>
-                ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
+                ${buildMediaDeVotos(filme.vote_average)}
                 <a class="btn btn-link" href="/detalhes.html?filmeId=${filme.id}" role="button">Ver Detalhes</a>
               </div>
             </div>
@@ -76,7 +76,7 @@ function getPopulares() {
                 <h5 class="card-title">${truncateTitle(filme.title)}</h5>
                 <p class="card-text d-flex flex-wrap justify-content-between align-items-center">
                 <span>${convertPtBrDate(filme.release_date)}</span>
-                ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
+                ${buildMediaDeVotos(filme.vote_average)}
                 <a class="btn btn-link" href="/detalhes.html?filmeId=${filme.id}" role="button">Ver Detalhes</a>
               </div>
             </div>
@@ -107,7 +107,7 @@ function getCinema() {
                 <h5 class="card-title">${truncateTitle(filme.title)}</h5>
                 <p class="card-text d-flex flex-wrap justify-content-between align-items-center">
                 <span>${convertPtBrDate(filme.release_date)}</span>
-                ${buildMediaDeVotos(filme.vote_average, filme.vote_count)}
+                ${buildMediaDeVotos(filme.vote_average)}
                 <a class="btn btn-link" href="/detalhes.html?filmeId=${filme.id}" role="button">Ver Detalhes</a>
               </div>
             </div>`;
@@ -144,6 +144,8 @@ function getDetalhes(filmeId) {
                 ${buildBudget(filme.budget)}
                 <p class="card-text">Data de lançamento: ${convertPtBrDate(filme.release_date)}</p>
                 <p>${buildProductionsCompanies(filme.production_companies)}</p>
+                <p class="card-text">Média de votos: ${filme.vote_average*10}</p>
+                <p class="card-text">Total de votos: ${filme.vote_count}</p>
               </div>
             </div>
           </div>`;
@@ -189,7 +191,7 @@ function buildPagination(totalPages) {
         containerBusca.insertAdjacentHTML("afterend", htmlPagination);
 }
 
-function buildMediaDeVotos(media, totalVotos) {
+function buildMediaDeVotos(media) {
   if(media) {
     let classMediaVotos = "";
     if(media >= 7.0) {
