@@ -96,7 +96,6 @@ function getCinema() {
     fetch(`${API_CONFIG.baseUrl}${API_CONFIG.cinemaEndpoint}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}`)
         .then(resp => resp.json())
         .then(data => {
-
           
           let concatString=`<h2 class="text-center">Cinema</h2>
           <div id="container-cinema" class="container-filmes row flex-row flex-nowrap">`;
@@ -256,7 +255,7 @@ function validateMovies(...args) {
 
 function truncateTitle(title) {
   if(isMobile()) {
-    return title.length >= 30 ? title.slice(0, 30)+"..." : title;
+    return title.length >= 25 ? title.slice(0, 25)+"..." : title;
   }
   return title;
 }

@@ -36,18 +36,15 @@ footer {
 @media screen and (max-width: 992px) { /* Celulares e Tablets */
     .card {
         width: 12rem !important;
-    }
-
-    #back-arrow {
-        display: none;
-    }
-
-    #next-arrow {
-        display: none;
+        height: 461px;
     }
 
     .media-votos {
         top: 60% !important;
+    }
+
+    .btn-link {
+        padding-left: 0px;
     }
 }
 
