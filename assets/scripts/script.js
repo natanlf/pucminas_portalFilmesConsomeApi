@@ -126,7 +126,6 @@ function getDetalhes(filmeId) {
     fetch(`${API_CONFIG.baseUrl}${API_CONFIG.detalhesEndpoint}${filmeId}?api_key=${API_CONFIG.apiKey}${API_CONFIG.language}`)
         .then(resp => resp.json())
         .then(filme => {
-          console.log(filme)
           let concatString=`
           <div id="container-detalhes container">
             <div class="row justify-content-center">
@@ -139,6 +138,7 @@ function getDetalhes(filmeId) {
                 <h1 class="card-title mb-card">${filme.title}</h1>
                 <p class="card-text">${filme.tagline}</p>
                 ${buildGenres(filme.genres)}
+                <p class="card-text">Duração: ${filme.runtime} min</p>
                 <p class="card-text">${filme.overview}</p>
                 ${buildBudget(filme.budget)}
                 <p class="card-text">Data de lançamento: ${convertPtBrDate(filme.release_date)}</p>
@@ -254,10 +254,7 @@ function validateMovies(...args) {
 }
 
 function truncateTitle(title) {
-  if(isMobile()) {
-    return title.length >= 25 ? title.slice(0, 25)+"..." : title;
-  }
-  return title;
+  return title.length >= 25 ? title.slice(0, 25)+"..." : title;
 }
 
 function isMobile() {
